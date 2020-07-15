@@ -17,21 +17,74 @@ class BSTNode:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
-
+        # Case 1: Value is less than self.value
+        if value < self.value:
+            # If there is no left child, insert here 
+            if self.left is None:
+                self.left = BSTNode(value)
+            else:
+                # Repeat process on left subtree
+                self.left.insert(value)
+        # Case 2: Value is greater than or equal self.value
+        elif value >= self.value:
+                # If there is no left child, insert here 
+                if self.right is None:
+                    self.right = BSTNode(value)
+                else:
+                    # Repeat process on left subtree
+                    self.right.insert(value)
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        # Case 1: is self.value is equal to the target
+        if self.value == target:
+            return True
+        # Case 2: if target is less than self.value
+        if target < self.value:
+            # if self.left is None, it isn't in the tree
+            if self.left is None:
+                return False
+            else:
+                return self.left.contains(target)
+        # Case 3: otherwise
+        else:
+            if self.right is None:
+                return False
+            else:
+                return self.right.contains(target)
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        # Store top node as max
+        max_node = self
+        # While self.left is not none
+        while self.right != None:
+        # Self.left = max
+            max_node = self.right
+            self = self.right
+        # Return max
+        return max_node.value
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+        fn(self.value)
+        # Case 1: Node is Leaf
+        if self.left and self.right == None:
+            return None
 
+        # Case 2: Node has 1 child (left)
+        elif (self.left != None) and (self.right == None):
+            self.left.for_each(fn)
+
+        # Case 3: Node has 1 child (right)
+        elif (self.right != None) and (self.left == None):
+            self.right.for_each(fn)
+
+        # Case 4: Node has 2 children
+        elif self.left and self.right != None:
+            self.left.for_each(fn)
+            self.right.for_each(fn)
+        
     # Part 2 -----------------------
 
     # Print all the values in order from low to high
