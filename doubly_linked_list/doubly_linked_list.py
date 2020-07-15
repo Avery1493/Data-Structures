@@ -190,6 +190,8 @@ class DoublyLinkedList:
         if self.length == 1:
             self.head = None
             self.tail = None
+            # Decrement the length of the DLL
+            self.length -= 1
         elif self.length != 0:
             if node == self.head:
                 self.remove_from_head()
